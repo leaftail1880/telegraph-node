@@ -1,0 +1,22 @@
+{
+	"name": "telegraph-node",
+	"description": "Node version of https://deno.land/x/telegraph",
+	"version": "0.0.1",
+	"main": "./dist/mod.ts",
+	"types": "./types/mod.d.ts",
+	"scripts": {
+		"build": "tsc",
+		"build2022": "tsc --target=ES20222"
+	},
+	"license": "MIT",
+	"devDependencies": {
+		"@types/markdown-it": "^12.2.3",
+		"@types/node": "^18.11.18"
+	},
+	"dependencies": {
+		"markdown-it": "^13.0.1",
+		"node-fetch": "^3.3.0",
+		"node-html-parser": "^6.1.4"
+	},
+	"type": "module"
+}
