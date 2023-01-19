@@ -2,12 +2,9 @@
 	"compilerOptions": {
 		"target": "ES5",
 		"moduleResolution": "node",
-		"declaration": true,
-		"emitDeclarationOnly": true,
 		"outDir": "dist",
-		"declarationDir": "types",
-		"declarationMap": true,
+		"declaration": true,
 		"allowSyntheticDefaultImports": true
 	},
-	"include": ["./mod.ts"]
+	"include": ["src/index.ts"]
 }

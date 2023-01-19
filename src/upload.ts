@@ -1,5 +1,5 @@
 import fs from "fs/promises";
-import fetch from "node-fetch";
+import fetch, {File, FormData} from "node-fetch";
 
 /**
  * Helps to upload local files upto 5 or 6MB (I think) to Telegraph's file

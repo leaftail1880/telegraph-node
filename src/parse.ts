@@ -3,7 +3,7 @@ import { parse, HTMLElement, Node, TextNode } from "node-html-parser";
 import MarkdownIt from "markdown-it";
 const Markdown = new MarkdownIt();
 
-import { NodeElement, Tag } from "./types";
+import { NodeElement, Tag } from "./types.js";
 
 const TELEGRAM_REGEX = /^(https?):\/\/(t\.me|telegram\.me|telegram\.dog)\/([a-zA-Z0-9_]+)\/(\d+)/;
 const VIMEO_REGEX = /(https?:\/\/)?(www.)?(player.)?vimeo.com\/([a-z]*\/)*([0-9]{6,11})[?]?.*/;
@@ -18,7 +18,7 @@ export const parseMarkdown = (content: string) => {
 
 export const parseHtml = (content: string) => {
 	// Replaced new DOMParser.parseFromString(conent, "text/html").body to this
-	const body = parse(content).childNodes[0];
+	const body = parse(content);
 	const node = domToNode(body);
 	if (node) return typeof node === "string" ? node : node.children;
 };
@@ -31,7 +31,7 @@ const domToNode = (el: Node) => {
 	// Added this to check types
 	const isHTMLel = el instanceof HTMLElement;
 	// Tag is only for htmlelement
-	const tag = isHTMLel ? el.rawTagName.toLowerCase() : null;
+	const tag = isHTMLel ? el.tagName?.toLowerCase() : null;
 	const nodeElement: NodeElement = { tag: tag as Tag };
 
 	switch (tag) {
@@ -58,7 +58,7 @@ const domToNode = (el: Node) => {
 		case "code":
 			// Having a code block like `<pre><code>content here</code></pre>`, is not rendering as an actual "pre" code block.
 			// But, instead having just `<pre>content here</pre>` or a `<pre><pre>content here</pre></pre>` works fine.
-			if (el.parentNode?.tagName === "PRE") {
+			if (el.parentNode?.tagName?.toLowerCase() === "pre") {
 				nodeElement.tag = "pre";
 			}
 			break;
