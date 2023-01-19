@@ -7,7 +7,7 @@ This is a tiny Telegra.ph API wrapper for NodeJS written in
 [here](https://telegra.ph/api#Available-methods) are available. See
 [Usage](#usage) for usage examples for each methods.
 
-See the [npm module](https://www.npmjs.com/package/leafy-utils) and the [Deno module](https://deno.land/x/telegraph).
+See the [Npm module](https://www.npmjs.com/package/better-telegraph) and the [Deno module](https://deno.land/x/telegraph).
 
 ### Table of Contents
 
@@ -39,20 +39,20 @@ files). See example usage.
 Install the module
 
 ```
-npm install telegraph-node
+npm install better-telegraph
 ```
 
 or
 
 ```
-yarn add telegraph-node
+yarn add better-telegraph
 ```
 
 Import to your project file and connect or create a Telegraph account:
 
 ```ts
 // Import Telegraph class to your project.
-import { Telegraph } from "telegraph-node";
+import { Telegraph } from "better-telegraph";
 
 // Connect to an account.
 const tphOldAccount = new Telegraph({
@@ -469,7 +469,7 @@ This function helps you to upload `.jpg`, `.jpeg`, `.png`, `.gif` and `.mp4`
 files upto ~6MB (I think so) to [Telegra.ph](https://telegra.ph).
 
 ```ts
-import { parseMarkdown, Telegraph } from "telegraph-node";
+import { parseMarkdown, Telegraph } from "better-telegraph";
 // Local File
 const localFile = await Telegraph.upload("video.mp4");
 // From URL, you actually don't have to do this, you can pass this URL as src if you want to.
@@ -554,7 +554,7 @@ and Nodes. To use HTML and Markdown you need to import two parser functions from
 the module.
 
 ```ts
-import { parseHtml, parseMarkdown } from "telegraph-node";
+import { parseHtml, parseMarkdown } from "better-telegraph";
 ```
 
 Here are basic examples for each type. See the README of the official Repository
@@ -569,7 +569,7 @@ const content = ["Array of strings.", " I am number one."];
 
 ```ts
 // Import the HTML parser.
-import { parseHtml } from "telegraph-node";
+import { parseHtml } from "better-telegraph";
 const content = parseHtml(`<h1>Pure HTML, boys</h1><br>
 <p><b>Be bold</b></p>`);
 ```
@@ -579,7 +579,7 @@ for the content.
 
 ```ts
 // Import the markdown parser.
-import { parseMarkdown } from "telegraph-node";
+import { parseMarkdown } from "better-telegraph";
 const content = parseMarkdown(`## Heading 2\n\nThis is so **cool**!`);
 ```
 
