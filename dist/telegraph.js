@@ -1,54 +1,4 @@
-"use strict";
-var __assign = (this && this.__assign) || function () {
-    __assign = Object.assign || function(t) {
-        for (var s, i = 1, n = arguments.length; i < n; i++) {
-            s = arguments[i];
-            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-                t[p] = s[p];
-        }
-        return t;
-    };
-    return __assign.apply(this, arguments);
-};
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
-var __generator = (this && this.__generator) || function (thisArg, body) {
-    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
-    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
-    function verb(n) { return function (v) { return step([n, v]); }; }
-    function step(op) {
-        if (f) throw new TypeError("Generator is already executing.");
-        while (g && (g = 0, op[0] && (_ = 0)), _) try {
-            if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
-            if (y = 0, t) op = [op[0] & 2, t.value];
-            switch (op[0]) {
-                case 0: case 1: t = op; break;
-                case 4: _.label++; return { value: op[1], done: false };
-                case 5: _.label++; y = op[1]; op = [0]; continue;
-                case 7: op = _.ops.pop(); _.trys.pop(); continue;
-                default:
-                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
-                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
-                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
-                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
-                    if (t[2]) _.ops.pop();
-                    _.trys.pop(); continue;
-            }
-            op = body.call(thisArg, _);
-        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
-        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
-    }
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.Telegraph = void 0;
-var node_fetch_1 = require("node-fetch");
+import fetch from "node-fetch";
 /**
  * This single important class helps you to create
  * [Telegra.ph](https://telegra.ph) account instances and create pages (posts)
@@ -115,7 +65,7 @@ var node_fetch_1 = require("node-fetch");
  * Read the JSDocs or the official documentation on GitHub to find out more
  * about all methods and their usage.
  */
-var Telegraph = /** @class */ (function () {
+export class Telegraph {
     /**
      * Currently, you can pass in the values in 3 different ways.
      *
@@ -165,7 +115,7 @@ var Telegraph = /** @class */ (function () {
      * @param config Values required for creating or connecting a Telegra.ph
      * account. Pass in required values as the docs says.
      */
-    function Telegraph(config) {
+    constructor(config) {
         this.API_ROOT = "https://api.telegra.ph/";
         this.accessToken = "";
         if (config.accessToken)
@@ -177,17 +127,13 @@ var Telegraph = /** @class */ (function () {
             throw new Error("No valid input were provided to create or connect a Telegraph account.");
         }
     }
-    Object.defineProperty(Telegraph.prototype, "token", {
-        /** Access token of the account */
-        get: function () {
-            return this.accessToken;
-        },
-        set: function (value) {
-            this.accessToken = this.config.accessToken = value;
-        },
-        enumerable: false,
-        configurable: true
-    });
+    /** Access token of the account */
+    get token() {
+        return this.accessToken;
+    }
+    set token(value) {
+        this.accessToken = this.config.accessToken = value;
+    }
     /**
      * Updates or creates a Telegraph account and assigns the access token to the
      * account instance.
@@ -201,68 +147,51 @@ var Telegraph = /** @class */ (function () {
      * updating the existing account -- while creating an account instance.
      * @returns Information about the connected account.
      */
-    Telegraph.prototype.setupAccount = function () {
-        return __awaiter(this, void 0, void 0, function () {
-            var account;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        if (!(this.config.accessToken && (this.config.author_name || this.config.author_url || this.config.short_name))) return [3 /*break*/, 2];
-                        return [4 /*yield*/, this.editAccount(this.config)];
-                    case 1: return [2 /*return*/, _a.sent()];
-                    case 2:
-                        if (!(!this.config.accessToken && !this.accessToken && this.config.short_name)) return [3 /*break*/, 4];
-                        return [4 /*yield*/, this.createAccount({
-                                short_name: this.config.short_name,
-                                author_name: this.config.author_name,
-                                author_url: this.config.author_url,
-                            })];
-                    case 3:
-                        account = _a.sent();
-                        this.token = account.access_token;
-                        return [2 /*return*/, account];
-                    case 4: return [4 /*yield*/, this.getAccount()];
-                    case 5: 
-                    // If just access token.
-                    return [2 /*return*/, _a.sent()];
-                }
+    async setupAccount() {
+        // If access token and any other param is provided.
+        if (this.config.accessToken && (this.config.author_name || this.config.author_url || this.config.short_name)) {
+            return await this.editAccount(this.config);
+        }
+        // If no access token, and but at least `short_name`,
+        if (!this.config.accessToken && !this.accessToken && this.config.short_name) {
+            const account = await this.createAccount({
+                short_name: this.config.short_name,
+                author_name: this.config.author_name,
+                author_url: this.config.author_url,
             });
-        });
-    };
+            this.token = account.access_token;
+            return account;
+        }
+        // If just access token.
+        return await this.getAccount();
+        // What about no access token and no `short_name`? Already handled in
+        // constructor, I think that works.
+    }
     /**
      * Requests a API method with access token.
      * @param method API method.
      * @param payload Body of the API call.
      * @returns Result of the API call.
      */
-    Telegraph.prototype.request = function (method, payload) {
-        return __awaiter(this, void 0, void 0, function () {
-            var url, response, json;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        url = this.API_ROOT + method;
-                        return [4 /*yield*/, (0, node_fetch_1.default)(url, {
-                                method: "POST",
-                                headers: { "content-type": "application/json" },
-                                body: JSON.stringify(__assign({ access_token: this.accessToken }, payload)),
-                            })];
-                    case 1:
-                        response = _a.sent();
-                        if (!response.ok) {
-                            throw new Error(response.statusText);
-                        }
-                        return [4 /*yield*/, response.json()];
-                    case 2:
-                        json = (_a.sent());
-                        if (!json.ok) {
-                            throw new Error(json.error);
-                        }
-                        return [2 /*return*/, json.result];
-                }
-            });
+    async request(method, payload) {
+        const url = this.API_ROOT + method;
+        const response = await fetch(url, {
+            method: "POST",
+            headers: { "content-type": "application/json" },
+            body: JSON.stringify({
+                access_token: this.accessToken,
+                ...payload,
+            }),
         });
-    };
+        if (!response.ok) {
+            throw new Error(response.statusText);
+        }
+        const json = (await response.json());
+        if (!json.ok) {
+            throw new Error(json.error);
+        }
+        return json.result;
+    }
     /**
      * Creates a Telegraph account and returns the details of the new account.
      * Remember to store the `access_token`, of the account.
@@ -286,16 +215,9 @@ var Telegraph = /** @class */ (function () {
      * @returns "On success, returns an Account object with the regular fields and
      * an additional access_token field".
      */
-    Telegraph.prototype.createAccount = function (options) {
-        return __awaiter(this, void 0, void 0, function () {
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0: return [4 /*yield*/, this.request("createAccount", options)];
-                    case 1: return [2 /*return*/, _a.sent()];
-                }
-            });
-        });
-    };
+    async createAccount(options) {
+        return await this.request("createAccount", options);
+    }
     /**
      * Update information about the account. Pass only the parameters that you
      * want to edit. At least one of them is required.
@@ -315,16 +237,9 @@ var Telegraph = /** @class */ (function () {
      * @returns On success, returns an Account object with the `short_name`,
      * `author_name` (if there is) and `author_url` (if there is) fields.
      */
-    Telegraph.prototype.editAccount = function (options) {
-        return __awaiter(this, void 0, void 0, function () {
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0: return [4 /*yield*/, this.request("editAccountInfo", options)];
-                    case 1: return [2 /*return*/, _a.sent()];
-                }
-            });
-        });
-    };
+    async editAccount(options) {
+        return await this.request("editAccountInfo", options);
+    }
     /**
      * Use this method to get information about the account.
      *
@@ -352,19 +267,11 @@ var Telegraph = /** @class */ (function () {
      * `short_name`, `author_name`, `author_url`, `auth_url` and `page_count`.
      * @returns Account object with the requested fields on success.
      */
-    Telegraph.prototype.getAccount = function (fields) {
-        if (fields === void 0) { fields = ["short_name", "author_name", "author_url", "auth_url", "page_count"]; }
-        return __awaiter(this, void 0, void 0, function () {
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0: return [4 /*yield*/, this.request("getAccountInfo", {
-                            fields: fields,
-                        })];
-                    case 1: return [2 /*return*/, _a.sent()];
-                }
-            });
+    async getAccount(fields = ["short_name", "author_name", "author_url", "auth_url", "page_count"]) {
+        return await this.request("getAccountInfo", {
+            fields,
         });
-    };
+    }
     /**
      * Use this method to revoke `access_token` and generate a new one. For
      * example, if the you would like to reset all connected sessions, or you have
@@ -400,22 +307,12 @@ var Telegraph = /** @class */ (function () {
      * @returns On success, returns new `access_token` and `auth_url` for the
      * account.
      */
-    Telegraph.prototype.revokeAccessToken = function (save) {
-        if (save === void 0) { save = true; }
-        return __awaiter(this, void 0, void 0, function () {
-            var accountCreds;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0: return [4 /*yield*/, this.request("revokeAccessToken")];
-                    case 1:
-                        accountCreds = _a.sent();
-                        if (save)
-                            this.token = accountCreds.access_token;
-                        return [2 /*return*/, accountCreds];
-                }
-            });
-        });
-    };
+    async revokeAccessToken(save = true) {
+        const accountCreds = await this.request("revokeAccessToken");
+        if (save)
+            this.token = accountCreds.access_token;
+        return accountCreds;
+    }
     /**
      * Use this method to create a new Telegraph page from the account.
      *
@@ -501,20 +398,12 @@ var Telegraph = /** @class */ (function () {
      * @returns On success, returns a `Page` object with all the details of the
      * page you just created.
      */
-    Telegraph.prototype.create = function (options) {
-        return __awaiter(this, void 0, void 0, function () {
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        if (typeof options.content === "string") {
-                            options.content = [options.content];
-                        }
-                        return [4 /*yield*/, this.request("createPage", options)];
-                    case 1: return [2 /*return*/, _a.sent()];
-                }
-            });
-        });
-    };
+    async create(options) {
+        if (typeof options.content === "string") {
+            options.content = [options.content];
+        }
+        return await this.request("createPage", options);
+    }
     /**
      * Use this method to edit an existing Telegraph page.
      *
@@ -604,27 +493,19 @@ var Telegraph = /** @class */ (function () {
      * optional.
      * @returns
      */
-    Telegraph.prototype.edit = function (path, options) {
-        return __awaiter(this, void 0, void 0, function () {
-            var title;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        if (!!options.title) return [3 /*break*/, 2];
-                        return [4 /*yield*/, this.get(path)];
-                    case 1:
-                        title = (_a.sent()).title;
-                        options.title = title;
-                        _a.label = 2;
-                    case 2:
-                        if (typeof options.content === "string") {
-                            options.content = [options.content];
-                        }
-                        return [2 /*return*/, this.request("editPage", __assign({ path: path }, options))];
-                }
-            });
+    async edit(path, options) {
+        if (!options.title) {
+            const { title } = await this.get(path);
+            options.title = title;
+        }
+        if (typeof options.content === "string") {
+            options.content = [options.content];
+        }
+        return this.request("editPage", {
+            path: path,
+            ...options,
         });
-    };
+    }
     /**
      * Use this method to get a Telegraph page.
      *
@@ -649,20 +530,12 @@ var Telegraph = /** @class */ (function () {
      * @returns On success, returns a `Page` object with the details of the
      * requested page.
      */
-    Telegraph.prototype.get = function (path, returnContent) {
-        if (returnContent === void 0) { returnContent = false; }
-        return __awaiter(this, void 0, void 0, function () {
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0: return [4 /*yield*/, this.request("getPage", {
-                            path: path,
-                            return_content: returnContent,
-                        })];
-                    case 1: return [2 /*return*/, _a.sent()];
-                }
-            });
+    async get(path, returnContent = false) {
+        return await this.request("getPage", {
+            path: path,
+            return_content: returnContent,
         });
-    };
+    }
     /**
      * Use this method to get a list of pages belonging to the account. Returns a
      * PageList object, sorted by most recently created pages first.
@@ -691,17 +564,9 @@ var Telegraph = /** @class */ (function () {
      * @returns Returns a PageList object, sorted by most recently created pages
      * first.
      */
-    Telegraph.prototype.getPages = function (options) {
-        if (options === void 0) { options = { limit: 50, offset: 0 }; }
-        return __awaiter(this, void 0, void 0, function () {
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0: return [4 /*yield*/, this.request("getPageList", options)];
-                    case 1: return [2 /*return*/, _a.sent()];
-                }
-            });
-        });
-    };
+    async getPages(options = { limit: 50, offset: 0 }) {
+        return await this.request("getPageList", options);
+    }
     /**
      * Use this method to get the number of views for a Telegraph article.
      *
@@ -736,16 +601,10 @@ var Telegraph = /** @class */ (function () {
      * @returns Number of views `{ "views": 0 }`
      * ```
      */
-    Telegraph.prototype.getPageViews = function (path, options) {
-        return __awaiter(this, void 0, void 0, function () {
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0: return [4 /*yield*/, this.request("getViews", __assign({ path: path }, options))];
-                    case 1: return [2 /*return*/, _a.sent()];
-                }
-            });
+    async getPageViews(path, options) {
+        return await this.request("getViews", {
+            path: path,
+            ...options,
         });
-    };
-    return Telegraph;
-}());
-exports.Telegraph = Telegraph;
+    }
+}
